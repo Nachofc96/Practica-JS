@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .green {
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lista de Estudiantes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Promedio</th>
+            </tr>
+        </thead>
+        <tbody id="tablaEstudiantes">
+        </tbody>
+    </table>
+    <p>Promedio general de la clase: <span id="promedioGeneral"></span></p>
+
+    <script>
+        const estudiantes = [
+            { nombre: "Rodrigo", notas: [8, 9, 7, 5, 9] },
+            { nombre: "Federico", notas: [4, 6, 6, 7, 9] },
+            { nombre: "Facundo", notas: [5, 7, 5, 8, 10] },
+            { nombre: "Pablo", notas: [3, 3, 8, 6, 4] },
+            { nombre: "Matias", notas: [7, 8, 7, 9, 7] },
+            { nombre: "Fabricio", notas: [8, 8, 7, 6, 9] },
+            { nombre: "Ignacio", notas: [10, 10, 10, 10, 10] },
+            { nombre: "Hugo", notas: [5, 8, 9, 9, 6] },
+            { nombre: "Javier", notas: [8, 2, 6, 7, 9] },
+            { nombre: "Patrico", notas: [6, 8, 6, 9, 8] }
+        ];
+
+        const tablaEstudiantes = document.getElementById('tablaEstudiantes');
+        const promedioGeneral = document.getElementById('promedioGeneral');
+
+        estudiantes.forEach(estudiante => {
+            const promedio = calcularPromedio(estudiante.notas);
+            const fila = document.createElement('tr');
+            const nombreCelda = document.createElement('td');
+            const promedioCelda = document.createElement('td');
+
+            nombreCelda.textContent = estudiante.nombre;
+            promedioCelda.textContent = promedio;
+
+            fila.appendChild(nombreCelda);
+            fila.appendChild(promedioCelda);
+
+            if (promedio === 10) {
+                fila.classList.add('green');
+            }
+
+            tablaEstudiantes.appendChild(fila);
+        });
+
+        const promedioTotal = calcularPromedioTotal(estudiantes);
+        promedioGeneral.textContent = promedioTotal;
+
+        function calcularPromedio(notas) {
+            const suma = notas.reduce((total, nota) => total + nota, 0);
+            return suma / notas.length;
+        }
+
+        function calcularPromedioTotal(estudiantes) {
+            const promedios = estudiantes.map(estudiante => calcularPromedio(estudiante.notas));
+            const suma = promedios.reduce((total, promedio) => total + promedio, 0);
+            return suma / promedios.length;
+        }
+    </script>
+</body>
+
+</html>
